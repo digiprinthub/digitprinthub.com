@@ -109,7 +109,7 @@ const Main = () => {
               </div>
               <div style={{ marginTop: "28px", textAlign: "center" }}>
                 <Link to="/printersearch">
-                  <Button
+{/*                   <Button
                     style={ctaButtonStyle}
                     onMouseOver={(e) =>
                       (e.target.style.backgroundColor =
@@ -121,7 +121,7 @@ const Main = () => {
                     }
                   >
                     Get Started
-                  </Button>
+                  </Button> */}
                 </Link>
               </div>
             </Col>
