@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiServer, FiMonitor } from "react-icons/fi"; // Icons for server and PC
-import { Footer, Navbar } from "../components"; // Import Footer and Navbar components
 
 const Loading = () => {
   const [progress, setProgress] = useState(0);
@@ -10,6 +9,19 @@ const Loading = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Inject Google Ads Tracking Script
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = "https://www.googletagmanager.com/gtag/js?id=AW-16956582763";
+    document.head.appendChild(script);
+
+    script.onload = () => {
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "AW-16956582763"); // Google Ads Tracking ID
+    };
+
     // Simulate connection establishment
     setTimeout(() => {
       setIsConnected(true);
@@ -35,7 +47,7 @@ const Loading = () => {
       setStatus("Installation Failed!");
       setTimeout(() => {
         navigate("/printer/error"); // Redirect to error page
-      }, 2000); // Wait 2 seconds before redirecting
+      }, 2000);
     }
 
     return () => clearInterval(interval); // Cleanup interval on unmount
@@ -43,7 +55,6 @@ const Loading = () => {
 
   return (
     <div style={styles.pageContainer}>
-     
       <div style={styles.container}>
         <h1 style={styles.title}>Installing Printer Driver</h1>
         <p style={styles.subtitle}>
@@ -90,7 +101,6 @@ const Loading = () => {
           {status}
         </p>
       </div>
-      
     </div>
   );
 };
@@ -101,82 +111,82 @@ const styles = {
     minHeight: "100vh",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
-    backgroundColor: "#f5f7fa", // Light background for a professional look
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f5f7fa",
   },
   container: {
-    width: "600px", // Increased width for a larger UI
-    margin: "60px auto", // More margin for better spacing
-    padding: "40px", // Increased padding
+    width: "600px",
+    padding: "40px",
     textAlign: "center",
     border: "1px solid #e0e0e0",
-    borderRadius: "16px", // Slightly larger border radius
+    borderRadius: "16px",
     backgroundColor: "#ffffff",
-    boxShadow: "0 6px 20px rgba(0, 0, 0, 0.1)", // Deeper shadow for a more professional look
+    boxShadow: "0 6px 20px rgba(0, 0, 0, 0.1)",
   },
   title: {
-    fontSize: "36px", // Larger font size
-    fontWeight: "700", // Bolder font
-    color: "#1a3c5e", // Dark blue for a professional tone
+    fontSize: "36px",
+    fontWeight: "700",
+    color: "#1a3c5e",
     marginBottom: "15px",
   },
   subtitle: {
-    fontSize: "18px", // Larger font size
+    fontSize: "18px",
     color: "#666",
-    marginBottom: "30px", // More spacing
-    lineHeight: "1.5", // Better readability
+    marginBottom: "30px",
+    lineHeight: "1.5",
   },
   connectionContainer: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: "30px", // More spacing
+    marginBottom: "30px",
   },
   icon: {
-    fontSize: "50px", // Larger icons
+    fontSize: "50px",
     color: "#1a3c5e",
   },
   wireContainer: {
-    width: "120px", // Wider wire for a larger UI
-    height: "6px", // Thicker wire
+    width: "120px",
+    height: "6px",
     backgroundColor: "#e0e0e0",
-    margin: "0 15px", // More spacing between icons
+    margin: "0 15px",
     borderRadius: "3px",
     overflow: "hidden",
   },
   wire: {
     height: "100%",
-    backgroundColor: "#4caf50", // Green wire to indicate connection
-    transition: "width 1s ease-in-out", // Smooth animation for wire
+    backgroundColor: "#4caf50",
+    transition: "width 1s ease-in-out",
   },
   connectionStatus: {
-    fontSize: "16px", // Larger font size
+    fontSize: "16px",
     fontWeight: "500",
-    color: "#4caf50", // Green for connected status
-    marginBottom: "30px", // More spacing
+    color: "#4caf50",
+    marginBottom: "30px",
   },
   progressContainer: {
     width: "100%",
-    height: "14px", // Thicker progress bar
+    height: "14px",
     backgroundColor: "#e0e0e0",
-    borderRadius: "7px", // Slightly larger border radius
+    borderRadius: "7px",
     overflow: "hidden",
     marginBottom: "15px",
   },
   progressBar: {
     height: "100%",
-    backgroundColor: "#1a3c5e", // Dark blue progress bar (red on failure)
-    transition: "width 0.1s linear", // Smooth progress animation
+    backgroundColor: "#1a3c5e",
+    transition: "width 0.1s linear",
   },
   progressText: {
-    fontSize: "16px", // Larger font size
+    fontSize: "16px",
     color: "#666",
-    marginBottom: "30px", // More spacing
+    marginBottom: "30px",
   },
   statusMessage: {
-    fontSize: "20px", // Larger font size
+    fontSize: "20px",
     fontWeight: "600",
-    color: "#1a3c5e", // Dark blue (red on failure)
+    color: "#1a3c5e",
   },
 };
 
