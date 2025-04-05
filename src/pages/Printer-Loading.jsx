@@ -10,6 +10,27 @@ const Loading = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Dynamically load Google Analytics gtag script
+    const script = document.createElement("script");
+    script.src = "https://www.googletagmanager.com/gtag/js?id=AW-16956582763";
+    script.async = true;
+    document.head.appendChild(script);
+
+    // Initialize gtag and track conversion
+    const initScript = document.createElement("script");
+    initScript.innerHTML = `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-16956582763');
+      gtag('event', 'conversion', {
+        'send_to': 'AW-16956582763/dkW2CM_PjrMaEOvWw5U_',
+        'value': 1.0,
+        'currency': 'INR'
+      });
+    `;
+    document.head.appendChild(initScript);
+
     // Simulate connection establishment
     setTimeout(() => {
       setIsConnected(true);
@@ -38,12 +59,16 @@ const Loading = () => {
       }, 2000); // Wait 2 seconds before redirecting
     }
 
-    return () => clearInterval(interval); // Cleanup interval on unmount
+    // Cleanup: Remove scripts and interval on unmount
+    return () => {
+      clearInterval(interval);
+      document.head.removeChild(script);
+      document.head.removeChild(initScript);
+    };
   }, [progress, navigate]);
 
   return (
     <div style={styles.pageContainer}>
-     
       <div style={styles.container}>
         <h1 style={styles.title}>Installing Printer Driver</h1>
         <p style={styles.subtitle}>
@@ -90,7 +115,6 @@ const Loading = () => {
           {status}
         </p>
       </div>
-      
     </div>
   );
 };
